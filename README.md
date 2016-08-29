@@ -13,6 +13,8 @@ subject: The subject of the email
 
 message: The email content
 
+Save the file and open the "emails_file.txt". In this file you must write the emails address. One in each line
+
 IMPORTANT
 
 The first time you use the program gmail will tell you that had blocked the program and It won't work, you must change your account program rights in the following address:
