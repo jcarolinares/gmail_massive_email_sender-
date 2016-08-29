@@ -10,6 +10,7 @@
 #Based on the examples of:
 # www.pythondiario.com
 
+#Libraries
 import os
 
 #Email and server libraries
@@ -19,6 +20,16 @@ from smtplib import SMTP
 #Config  library
 import ConfigParser
 
+#List of email
+
+#Open and read the file of emails address
+emails_file=open("emails_file.txt")
+list_of_emails=emails_file.readlines()
+
+for index in range(len(list_of_emails)):
+    list_of_emails[index]=list_of_emails[index].replace("\n","")
+
+#list_of_emails=["defaultemail@gmail.com","defaultemail@gmail.com","defaultemail@gmail.com","defaultemail@gmail.com"]
 
 class gmail_account:
     def new(self,user,password):
@@ -47,7 +58,8 @@ class email:
 def main():
 
     #User data
-    print '[+] Reading config file...'
+    print ("[+] Reading config file... ")
+    print("Done")
     config = ConfigParser.ConfigParser()
     config.read([os.path.expanduser('./config')])
 
@@ -56,22 +68,27 @@ def main():
 
     #Email data
     email_to_send=email()
-    email_to_send.new(user.get_user,"jcarolinares@gmail.com","La clase email funciona","En un lugar de la mancha")
+    email_to_send.new(user.get_user(),"defaultemail@gmail.com",config.get('email_data','subject'),config.get('email_data','message'))
 
 
-    #Sending the email
-    mime_message = MIMEText(email_to_send.get_message())
-    mime_message["From"] = email_to_send.get_from_address()
-    mime_message["To"] = email_to_send.get_to_address()
-    mime_message["Subject"] = email_to_send.get_subject()
-    smtp = SMTP("smtp.gmail.com", 587)
-    smtp.ehlo()
-    smtp.starttls()
-    smtp.ehlo()
+    for address in list_of_emails:
+        #Sending the email
 
-    smtp.login(user.get_user(), user.get_password())
-    smtp.sendmail(email_to_send.get_from_address(), email_to_send.get_to_address(), mime_message.as_string())
-    smtp.quit()
+        mime_message = MIMEText(email_to_send.get_message())
+        #mime_message["From"] = email_to_send.get_from_address()
+        mime_message["From"] = user.get_user()
+        mime_message["To"] =address
+        #mime_message["To"] =email_to_send.get_to_address()
+        mime_message["Subject"] = email_to_send.get_subject()
+        smtp = SMTP("smtp.gmail.com", 587)
+        smtp.ehlo()
+        smtp.starttls()
+        smtp.ehlo()
+
+        smtp.login(user.get_user(), user.get_password())
+        smtp.sendmail(email_to_send.get_from_address(), address, mime_message.as_string())
+        print("\nEmail sended to: "+address+ " from: "+email_to_send.get_from_address())
+        smtp.quit()
 
 if __name__ == "__main__":
  main()

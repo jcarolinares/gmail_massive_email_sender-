@@ -1,3 +1,7 @@
 [user_email]
-user_name=useremail@gmail.com
+user_name=defaultemail@gmail.com
 password=12345678
+
+[email_data]
+subject="Default subject"
+message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id libero non erat fermentum varius eget at elit. Suspendisse vel mattis diam. Ut sed dui in lectus hendrerit interdum nec ac neque. Praesent a metus eget augue lacinia accumsan ullamcorper sit amet tellus. Duis cursus egestas hendrerit. Fusce luctus risus id elit malesuada ac sagittis magna tempus. Sed egestas fringilla turpis at ullamcorper. Pellentesque adipiscing ornare cursus. Aliquam a nulla sapien. Sed facilisis ultricies purus, sed dapibus eros auctor vel. Phasellus et est nibh. Sed sagittis neque vel magna euismod ut vulputate sapien tempus. Fusce feugiat condimentum nulla. Aliquam quis convallis nunc. Nulla eu eros quam. Heading H1Suspendisse elementum tincidunt mi, non dictum nibh molestie a. In placerat rutrum felis, eu lacinia nunc eleifend vitae."
