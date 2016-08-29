@@ -13,6 +13,10 @@ subject: The subject of the email
 
 message: The email content
 
+emails_in_package: number of emails sended in each package
+
+sleeping_time: time between every email package
+
 Save the file and open the "emails_file.txt". In this file you must write the emails address. One in each line
 
 IMPORTANT

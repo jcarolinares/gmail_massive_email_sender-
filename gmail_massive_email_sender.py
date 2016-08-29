@@ -12,6 +12,8 @@
 
 #Libraries
 import os
+import time
+
 
 #Email and server libraries
 from email.mime.text import MIMEText
@@ -70,14 +72,17 @@ def main():
     email_to_send=email()
     email_to_send.new(user.get_user(),"defaultemail@gmail.com",config.get('email_data','subject'),config.get('email_data','message'))
 
+    #Load of packages control
 
-    for address in list_of_emails:
+
+    counter_factor=1
+    for index in range(len(list_of_emails)):
         #Sending the email
 
         mime_message = MIMEText(email_to_send.get_message())
         #mime_message["From"] = email_to_send.get_from_address()
         mime_message["From"] = user.get_user()
-        mime_message["To"] =address
+        mime_message["To"] =list_of_emails[index]
         #mime_message["To"] =email_to_send.get_to_address()
         mime_message["Subject"] = email_to_send.get_subject()
         smtp = SMTP("smtp.gmail.com", 587)
@@ -86,9 +91,15 @@ def main():
         smtp.ehlo()
 
         smtp.login(user.get_user(), user.get_password())
-        smtp.sendmail(email_to_send.get_from_address(), address, mime_message.as_string())
-        print("\nEmail sended to: "+address+ " from: "+email_to_send.get_from_address())
+        smtp.sendmail(email_to_send.get_from_address(), list_of_emails[index], mime_message.as_string())
+        print("\nEmail sended to: "+list_of_emails[index]+ " from: "+email_to_send.get_from_address())
         smtp.quit()
+
+
+        if(index>=counter_factor*int(config.get('packages_control','emails_in_package'))-1):
+            print ("\nWaiting "+config.get('packages_control','sleeping_time')+" for the next package")
+            time.sleep(float(config.get('packages_control','sleeping_time')))
+            counter_factor=counter_factor+1
 
 if __name__ == "__main__":
  main()
