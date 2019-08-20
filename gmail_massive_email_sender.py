@@ -20,7 +20,7 @@ from email.mime.text import MIMEText
 from smtplib import SMTP
 
 #Config  library
-import ConfigParser
+import configparser
 
 #List of email
 
@@ -62,15 +62,19 @@ def main():
     #User data
     print ("[+] Reading config file... ")
     print("Done")
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     config.read([os.path.expanduser('./config')])
 
     user=gmail_account()
     user.new(config.get('user_email','user_name'),config.get('user_email','password'))
 
+    #parse email message to include new lines and paragraphs
+    message1 = config.get('email_data','message')
+    message1.replace('\\n', '\n')
+
     #Email data
     email_to_send=email()
-    email_to_send.new(user.get_user(),"defaultemail@gmail.com",config.get('email_data','subject'),config.get('email_data','message'))
+    email_to_send.new(user.get_user(),"defaultemail@gmail.com",config.get('email_data','subject'),message1)
 
     #Load of packages control
 
